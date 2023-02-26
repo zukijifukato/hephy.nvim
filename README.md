@@ -6,7 +6,9 @@
 
 If you wanna try nevertheless then,
 
-- `git clone https://github.com/zukijifukato/hephy.nvim.git ~/.local/share/nvim/site/pack/hephy/start/hephy.nvim`
+```bash
+git clone https://github.com/zukijifukato/hephy.nvim.git ~/.local/share/nvim/site/pack/hephy/start/hephy.nvim
+```
 
 ## Usage
 
