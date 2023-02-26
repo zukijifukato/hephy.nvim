@@ -110,7 +110,6 @@ M.lazy_load_event_type_plugin = function(name, plugin)
   for _, event in pairs(plugin.event) do
     vim.api.nvim_create_autocmd(event, {
       callback = function(cmd_type)
-        print("here")
         vim.api.nvim_del_autocmd(cmd_type.id)
         M.load_plugin_dependencies(name)
         vim.cmd("packadd " .. name)
@@ -122,11 +121,19 @@ M.lazy_load_event_type_plugin = function(name, plugin)
 end
 
 M.lazy_load_ft_type_plugin = function(name, plugin)
-  --
+  vim.api.nvim_create_autocmd("FileType", {
+    pattern = plugin.ft,
+    callback = function(cmd_type)
+      vim.api.nvim_del_autocmd(cmd_type.id)
+      M.load_plugin_dependencies(name)
+      vim.cmd("packadd " .. name)
+      M.plugins[name]["loaded"] = true
+      M.load_plugin_config(name)
+    end
+  })
 end
 
 M.lazy_load_plugin = function(name, plugin, keys)
-  M.load_plugin_dependencies(name)
   for _, key in pairs(keys) do
     if key == "cmd" then
       M.lazy_load_cmd_type_plugin(name, plugin)
